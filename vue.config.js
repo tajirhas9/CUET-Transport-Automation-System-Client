@@ -24,10 +24,7 @@ module.exports = {
       // change xxx-api/login => /mock-api/v1/login
       // detail: https://cli.vuejs.org/config/#devserver-proxy
       [process.env.VUE_APP_BASE_API]: {
-        target:
-          process.env.NODE_ENV === 'production'
-            ? `https://cuet-bus-scheduler.herokuapp.com/ctas/v1`
-            : `http://127.0.0.1:${localServerPort}/ctas/v1`,
+        target: `http://127.0.0.1:${localServerPort}/mock-api/v1`,
         changeOrigin: true, // needed for virtual hosted sites
         ws: true, // proxy websockets
         pathRewrite: {
