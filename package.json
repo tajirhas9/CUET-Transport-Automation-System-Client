@@ -4,14 +4,15 @@
   "private": true,
   "author": "Syed Tajir Hasnain <u1604081@student.cuet.ac.bd>",
   "scripts": {
-    "serve": "vue-cli-service serve --max-old-space-size=4096",
+    "serve": "vue-cli-service serve",
     "start": "vue-cli-service serve",
     "test:unit": "jest --clearCache && vue-cli-service test:unit",
     "lint": "vue-cli-service lint",
-    "build:prod": "npm run svg && vue-cli-service build --max-old-space-size=4096",
+    "build:prod": "npm run svg && vue-cli-service build",
     "build:stage": "vue-cli-service build --mode staging",
     "build:netlify": "vue-cli-service build --mode netlify",
-    "svg": "vsvg -s ./src/icons/svg -t ./src/icons/components --ext ts --es6"
+    "svg": "vsvg -s ./src/icons/svg -t ./src/icons/components --ext ts --es6",
+    "deploy": "sh deploy.sh"
   },
   "dependencies": {
     "@tinymce/tinymce-vue": "^3.2.6",
