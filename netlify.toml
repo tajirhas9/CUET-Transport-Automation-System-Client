@@ -1,4 +1,5 @@
 [build.environment]
+  NODE_VERSION = "14.18.2"
   NPM_FLAGS = "--legacy-peer-deps"
 [[redirects]]
   from = "/api/*"
