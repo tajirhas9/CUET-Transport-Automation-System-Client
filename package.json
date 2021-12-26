@@ -4,11 +4,11 @@
   "private": true,
   "author": "Syed Tajir Hasnain <u1604081@student.cuet.ac.bd>",
   "scripts": {
-    "serve": "vue-cli-service serve",
+    "serve": "vue-cli-service serve --max-old-space-size=4096",
     "start": "vue-cli-service serve",
     "test:unit": "jest --clearCache && vue-cli-service test:unit",
     "lint": "vue-cli-service lint",
-    "build:prod": "vue-cli-service build",
+    "build:prod": "npm run svg && vue-cli-service build --max-old-space-size=4096",
     "build:stage": "vue-cli-service build --mode staging",
     "build:netlify": "vue-cli-service build --mode netlify",
     "svg": "vsvg -s ./src/icons/svg -t ./src/icons/components --ext ts --es6"
@@ -31,6 +31,7 @@
     "exceljs": "^4.2.1",
     "faker": "^5.5.2",
     "file-saver": "^2.0.5",
+    "fork-ts-checker-webpack-plugin": "^6.5.0",
     "fuse.js": "^6.4.6",
     "js-cookie": "^2.2.1",
     "jsonlint": "^1.6.3",
