@@ -11,7 +11,7 @@ export const articleStatusFilter = (status: string) => {
   return statusMap[status]
 }
 
-export const driverLicenseStatusFilter = (status: string) => {
+export const driverlicenseFilter = (status: string) => {
   const statusMap: { [key: string]: string } = {
     Valid: 'success',
     Invalid: 'danger'

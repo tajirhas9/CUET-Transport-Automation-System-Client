@@ -17,7 +17,7 @@ export default {
     totalDriver: 'Total Driver',
     name: 'Name',
     address: 'Address',
-    licenseStatus: 'License Status'
+    license: 'License Status'
   },
   general: {
     id: 'ID'

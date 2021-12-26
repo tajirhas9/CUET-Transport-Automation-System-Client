@@ -48,7 +48,7 @@
           <DxItem :col-count="2" :col-span="2" item-type="group">
             <DxItem data-field="name" />
             <DxItem data-field="address" />
-            <DxItem data-field="licenseStatus" />
+            <DxItem data-field="license" />
           </DxItem>
         </DxForm>
       </DxEditing>
@@ -71,14 +71,14 @@
         <DxRequiredRule />
       </dx-column>
       <dx-column
-        data-field="licenseStatus"
+        data-field="license"
         data-type="boolean"
         header-cell-template="title-header"
-        :caption="$t('driver.licenseStatus')"
-        cell-template="licenseStatusTemplate"
+        :caption="$t('driver.license')"
+        cell-template="licenseTemplate"
       >
         <dx-lookup
-          :data-source="licenseStatusOptions"
+          :data-source="licenseOptions"
           value-expr="value"
           display-expr="name"
         />
@@ -106,8 +106,8 @@
           <a>{{ data.text }}</a>
         </div>
       </template>
-      <template #licenseStatusTemplate="{data}">
-        <el-tag :type="data.text | driverLicenseStatusFilter">
+      <template #licenseTemplate="{data}">
+        <el-tag :type="data.text | driverlicenseFilter">
           {{ data.text }}
         </el-tag>
       </template>
@@ -128,7 +128,7 @@ interface IRowData {
   driverId: number
   name: string
   address: string
-  licenseStatus: boolean
+  license: boolean
 }
 @Component({
   name: 'DriverTable',
@@ -146,7 +146,7 @@ export default class extends mixins(VueDevex) {
 
   private gridRefKey = 'driverGrid';
   private list: IRowData[] = [];
-  private licenseStatusOptions = [
+  private licenseOptions = [
     { value: false, name: 'Invalid' },
     { value: true, name: 'Valid' }
   ]
@@ -167,7 +167,7 @@ export default class extends mixins(VueDevex) {
         driverId: driver.id,
         name: driver.name,
         address: driver.address,
-        licenseStatus: driver.licenseStatus
+        license: driver.license
       })
     })
     this.listLoading = false
@@ -183,7 +183,35 @@ export default class extends mixins(VueDevex) {
   }
 
   private async onSaving(e: any) {
-    throw new Error('Method not implemented.')
+    this.listLoading = true
+    try {
+      const changes = e.changes[0]
+      console.debug(changes)
+      if (changes.type === 'insert') {
+        await DriverModule.addNewDriver(changes.data)
+      } else if (changes.type === 'update') {
+        console.log(changes)
+        await DriverModule.updateDriver({ id: changes.key, data: changes.data })
+      }
+      this.$notify({
+        title: 'Success',
+        message: 'Data updated successfully',
+        type: 'success',
+        duration: 2000
+      })
+      if (e.changes[0].type === 'insert') {
+        await this.getList()
+      }
+    } catch (e) {
+      this.$notify({
+        title: 'Failed',
+        message: 'Data updated failed',
+        type: 'error',
+        duration: 2000
+      })
+    }
+    e.cancel = true
+    this.listLoading = false
   }
 
   created() {

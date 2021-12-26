@@ -1,12 +1,12 @@
 import { VuexModule, Module, Action, Mutation, getModule } from 'vuex-module-decorators'
 import store from '@/store'
-import { getDrivers } from '@/api/driver'
+import { addNewDriver, getDrivers, updateDriver } from '@/api/driver'
 
 export interface IDriverState {
   id: number
   name: string
   address: string
-  licenseStatus: boolean
+  license: boolean
 }
 
 export interface IDriversState {
@@ -29,6 +29,35 @@ class Driver extends VuexModule implements IDriversState {
       this.SET_DRIVERS(data.drivers)
     } catch (e: any) {
       throw Error(e)
+    }
+  }
+
+  @Action
+  public async addNewDriver(payload: { name: string, address: string, license: boolean }) {
+    try {
+      await addNewDriver(payload)
+      await this.getDrivers()
+    } catch (e) {
+      console.error(e)
+    }
+  }
+
+  @Action
+  public async updateDriver(payload: { id: number, data: { name: string, address: string, license: boolean } }) {
+    try {
+      const currentDriverInfo = this.drivers.find(driver => driver.id === payload.id)
+      if (currentDriverInfo) {
+        const requestPayload = {
+          id: payload.id,
+          name: payload.data.name || currentDriverInfo.name,
+          address: payload.data.address || currentDriverInfo.address,
+          license: payload.data.license || currentDriverInfo.license
+        }
+        await updateDriver(requestPayload)
+        await this.getDrivers()
+      }
+    } catch (e) {
+      console.error(e)
     }
   }
 }

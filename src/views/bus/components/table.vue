@@ -119,7 +119,7 @@ interface IRowData {
   driverId: number
   name: string
   address: string
-  licenseStatus: boolean
+  license: boolean
 }
 @Component({
   name: 'BusTable',
