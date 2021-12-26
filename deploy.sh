@@ -10,5 +10,5 @@ cd dist
 git init
 git add -A
 git commit -m 'deploy'
-git push -f git@github.com:tajirhas9/CUET-Transport-Automation-System-Client.git master:gh-pages
+git push -f git@github.com:tajirhas9/CUET-Transport-Automation-System-Client.git main:gh-pages
 cd -
