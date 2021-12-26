@@ -5,11 +5,12 @@ const path = require('path')
 // use administrator privileges to execute the command line.
 // For example, on Mac: sudo npm run / sudo yarn
 const devServerPort = 9527 // TODO: get this variable from setting.ts
-const localServerPort = 9528 // TODO: get this variable from setting.ts
-const name = 'CUET Transport Automation System' // TODO: get this variable from setting.ts
+const mockServerPort = 9528 // TODO: get this variable from setting.ts
+const name = 'Precept Foundation' // TODO: get this variable from setting.ts
 
 module.exports = {
-  publicPath: process.env.NODE_ENV === 'production' ? '/ctas' : '/',
+  publicPath:
+    process.env.NODE_ENV === 'production' ? '/precept-foundation/' : '/',
   lintOnSave: process.env.NODE_ENV === 'development',
   productionSourceMap: false,
   devServer: {
@@ -24,10 +25,7 @@ module.exports = {
       // change xxx-api/login => /mock-api/v1/login
       // detail: https://cli.vuejs.org/config/#devserver-proxy
       [process.env.VUE_APP_BASE_API]: {
-        target:
-          process.env.NODE_ENV === 'development'
-            ? `http://127.0.0.1:${localServerPort}/ctas/v1`
-            : `https://cuet-bus-scheduler.herokuapp.com/ctas/v1`,
+        target: 'https://cuet-bus-scheduler-backend.herokuapp.com/ctas/v1',
         changeOrigin: true, // needed for virtual hosted sites
         ws: true, // proxy websockets
         pathRewrite: {
@@ -56,7 +54,7 @@ module.exports = {
     // provide the app's title in html-webpack-plugin's options list so that
     // it can be accessed in index.html to inject the correct title.
     // https://cli.vuejs.org/guide/webpack.html#modifying-options-of-a-plugin
-    config.plugin('html').tap((args) => {
+    config.plugin('html').tap(args => {
       args[0].title = name
       return args
     })
@@ -83,7 +81,7 @@ module.exports = {
     //     config => config.devtool('eval-cheap-source-map')
     //   )
 
-    config.when(process.env.NODE_ENV !== 'development', (config) => {
+    config.when(process.env.NODE_ENV !== 'development', config => {
       config.optimization.splitChunks({
         chunks: 'all',
         cacheGroups: {
