@@ -1,7 +1,8 @@
 module.exports = {
   root: true,
   env: {
-    node: true
+    "es2021": true,
+    "node": true
   },
   extends: [
     'plugin:vue/essential',
@@ -9,7 +10,7 @@ module.exports = {
     '@vue/typescript/recommended'
   ],
   parserOptions: {
-    ecmaVersion: 2020
+    ecmaVersion: 2021
   },
   rules: {
     '@typescript-eslint/ban-types': 'off',
